@@ -31,6 +31,11 @@ app.use('/api/auth', require('./routes/auth'));
 // Ruta de actualización de usuario con el middleware de carga de archivos
 app.use('/api/users',  upload.single('archivo'), require('./routes/users'));
 
+// Ruta para servir imágenes de perfil
+app.get('/uploads/:filename', (req, res) => {
+    const { filename } = req.params;
+    res.sendFile(path.join(__dirname, '../public/uploads/', filename));
+});
 
 app.get('*', (req, res) =>{
     res.sendFile(__dirname + '/public/index.html')
